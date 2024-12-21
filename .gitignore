@@ -1,5 +1,7 @@
 # Prerequisites
 *.d
+*.cmake
+CMakeLists.txt.user
 
 # Compiled Object files
 *.slo
@@ -31,4 +33,16 @@
 *.out
 *.app
 
-.vscode
+# Generated files
+*.gcno
+*.gcda
+*.gcov
+
+# CMake files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+.vscode/
+build/

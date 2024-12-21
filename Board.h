@@ -18,6 +18,7 @@ class Board {
     bool makeMove(const Move& move);
     void unmakeMove(const Move& move);
     std::vector<Move> generateAllMoves(Color color, bool legal);
+    std::vector<Move> getValidMovesForSquare(int x, int y, bool legal);
     bool makeAIMove(Color color);
     std::string toFEN() const;
     void displayFEN() const;

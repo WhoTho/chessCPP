@@ -3,7 +3,7 @@
 #include <limits>
 #include "Board.h"
 #include "Minimax.h"
-#include "testing/perfts/perftTester.h"
+// #include "testing/perfts/perftTester.h"
 
 void testToFEN() {
     Board board;

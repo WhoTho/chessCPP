@@ -8,7 +8,10 @@ class Move;
 
 class Minimax {
    public:
-    static Move findBestMove(Board& board, Color color, int depth);
+    static Move findBestMove(Board& board,
+                             Color color,
+                             int depth,
+                             bool useAlphaBeta);
     static int evaluateBoard(const Board& board, Color color);
 
    private:
@@ -16,6 +19,12 @@ class Minimax {
                        int depth,
                        bool isMaximizingPlayer,
                        Color color);
+    static int minimaxAlphaBeta(Board& board,
+                                int depth,
+                                int alpha,
+                                int beta,
+                                bool isMaximizingPlayer,
+                                Color color);
 };
 
 #endif  // MINIMAX_H

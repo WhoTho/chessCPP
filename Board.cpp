@@ -218,24 +218,35 @@ std::vector<Move> Board::generateAllMoves(Color color, bool legal) {
         for (int startY = 0; startY < 8; ++startY) {
             if (squares[startY][startX] &&
                 squares[startY][startX]->getColor() == color) {
-                auto validMoves = squares[startY][startX]->generateValidMoves(
-                    startX, startY, this);
-                for (const auto& move : validMoves) {
-                    if (legal) {
-                        makeMove(move);
-                        // display();
-                        if (!isKingInCheck(color)) {
-                            moves.push_back(move);
-                        }
-                        unmakeMove(move);
-                    } else {
-                        moves.push_back(move);
-                    }
-                }
+                auto validMoves = getValidMovesForSquare(startX, startY, legal);
+                moves.insert(moves.end(), validMoves.begin(), validMoves.end());
             }
         }
     }
     return moves;
+}
+
+std::vector<Move> Board::getValidMovesForSquare(int x, int y, bool legal) {
+    if (!squares[y][x]) {
+        return {};
+    }
+
+    const Color color = squares[y][x]->getColor();
+    auto validMoves = squares[y][x]->generateValidMoves(x, y, this);
+    if (!legal) {
+        return validMoves;
+    }
+
+    std::vector<Move> filteredMoves;
+    for (const auto& move : validMoves) {
+        makeMove(move);
+        if (!isKingInCheck(color)) {
+            filteredMoves.push_back(move);
+        }
+        unmakeMove(move);
+    }
+
+    return filteredMoves;
 }
 
 bool Board::isKingInCheck(Color color) const {
@@ -270,8 +281,7 @@ bool Board::isKingInCheck(Color color) const {
 }
 
 bool Board::makeAIMove(Color color) {
-    Move bestMove =
-        Minimax::findBestMove(*this, color, 3);  // Depth of 3 for simplicity
+    Move bestMove = Minimax::findBestMove(*this, color, 3, true);
     return makeMove(bestMove);
 }
 
